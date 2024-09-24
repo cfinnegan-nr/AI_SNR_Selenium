@@ -1,10 +1,19 @@
 # OpenAI Environment Variables
-AZURE_OPENAI_BASE_PATH="https://sail-prod-wb-cd-apim.azure-api.net/openai/deployments"
+# openaienvvars.py
+import os
 
-OPENAI_API_KEY="370616a41f1647a18eda5ab763b0d1da"
+def load_environment_variables(file_path):
+    with open(file_path) as f:
+        for line in f:
+            name, value = line.strip().split('=', 1)
+            os.environ[name] = value
 
-AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME="gpt-4o"
+# Load environment variables from the file
+load_environment_variables('SNR_Azure_OpenAI_Key.txt')
 
-AZURE_OPENAI_API_INSTANCE_NAME="openai"
-
-AZURE_OPENAI_API_VERSION="2024-02-01"
+# Now we can access the environment variables
+AZURE_OPENAI_BASE_PATH = os.getenv('AZURE_OPENAI_BASE_PATH')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME')
+AZURE_OPENAI_API_INSTANCE_NAME = os.getenv('AZURE_OPENAI_API_INSTANCE_NAME')
+AZURE_OPENAI_API_VERSION = os.getenv('AZURE_OPENAI_API_VERSION')
