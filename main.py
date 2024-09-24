@@ -10,26 +10,26 @@ import openpyxl
 
 
 def ReadTheInput():
-    return "ReadTheInput function called"
+    return "ReadTheInput function called\n"
 
 
 def chatwithme(value):
 
     # Set up OpenAI API credentials
-    API_KEY = config('OPENAI_API_KEY')
+    API_KEY = config(OPENAI_API_KEY)
     openai.api_key = API_KEY
 
 
-    return "chatwithme function called with value: " + value
+    return "chatwithme function called with value: " + value + "\n"
 
 
 def createFile(data):
-    return "createFile function called with data: " + data
+    return "createFile function called with data: " + data + "\n"
 
 
 def main():
     
-    print("Testing...")
+    print("Testing...\n")
     
     try:
         input_value = ReadTheInput()
@@ -42,4 +42,6 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-    
+
+if __name__ == "__main__":
+    main()    
