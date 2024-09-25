@@ -5,61 +5,11 @@ from openaienvvars import (AZURE_OPENAI_BASE_PATH, OPENAI_API_KEY,
                        AZURE_OPENAI_API_INSTANCE_NAME, 
                        AZURE_OPENAI_API_VERSION)
 
-
-
 # Import the necessary libraries
-import openai
-from decouple import config
-import openpyxl
+from modules.read_input_TC import ReadTheInput
+from modules.chat import chatwithLLM
+from modules.create_testauto_file import createFile
 
-
-
-
-def ReadTheInput():
-    return "ReadTheInput function called\n\n"
-
-
-
-
-def chatwithme(value):
-
-    # Check if all required environment variables are loaded
-    if None in [AZURE_OPENAI_BASE_PATH, OPENAI_API_KEY, AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME, AZURE_OPENAI_API_VERSION]:
-        print("Error: Some environment variables are not set.")
-        return
-
-    # Construct the correct URL
-    url = f"{AZURE_OPENAI_BASE_PATH}/{AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME}/chat/completions?api-version={AZURE_OPENAI_API_VERSION}"
-    
-    headers = {
-        "Content-Type": "application/json",
-        "api-key": OPENAI_API_KEY
-    }
-    
-    data = {
-        "messages": [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "Tell me a joke."}
-        ],
-        "max_tokens": 50
-    }
-    
-    try:
-        response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()  # Raise an HTTPError for bad responses
-        result = response.json()
-        print("Response:", result['choices'][0]['message']['content'].strip())
-        print("\n" + "Response returned from LLM" + "\n")
-    
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-    except KeyError:
-        print("Error: Response format is unexpected.")
-        print("Response content:", response.content)
-
-
-def createFile(data):
-    return "\n" + "createFile function called with data: " + data + "\n"
 
 
 def main():
@@ -68,11 +18,15 @@ def main():
     
     try:
         input_value = ReadTheInput()
+        print("Test Steps...\n")
         print(input_value)
+        print("\nInput these test steps into LLM...\n")
 
-        chatwithme("input_value")
+        resp = chatwithLLM(str(input_value))
         
-        print(createFile("chat_response"))
+
+        print("\n" + "createFile function called with LLM response" + "\n")
+        createFile(resp)
 
     except Exception as e:
         print(f"An error occurred in Main(): {e}")
