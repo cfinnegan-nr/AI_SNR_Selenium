@@ -1,3 +1,3 @@
 def createFile(data):
-    with open('TestCase.py', 'w') as fp:
+    with open('TestCase_py.py', 'w') as fp:
         fp.write(data)

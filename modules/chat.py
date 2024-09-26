@@ -18,7 +18,8 @@ def chatwithLLM(value):
     }
 
     # Build the prompt from the value passed and other string instructions
-    initial_instruction = "Using Selenium 4.3 with Python write code for following scenario:"
+    initial_instruction = "Using Selenium 4.0 with Python write code for following scenario:"
+    #initial_instruction = "Using Selenium 4.0 with Java write code for following scenario:"
     final_instruction = " using with dynamic wait at each step"
 
         
