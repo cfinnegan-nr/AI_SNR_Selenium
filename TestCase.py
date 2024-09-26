@@ -1,12 +1,4 @@
-Certainly! Below is an example of how you can achieve the described scenario using Selenium 4.3 with Python. This script includes dynamic waits at each step to ensure that elements are loaded before interacting with them.
-
-First, make sure you have Selenium installed. You can install it using pip if you haven't already:
-
-```bash
-pip install selenium
-```
-
-Here's the Python script:
+Certainly! Below is a Python script using Selenium 4.0 to automate the scenario you described. The script includes dynamic waits at each step to ensure elements are loaded before interacting with them.
 
 ```python
 from selenium import webdriver
@@ -15,46 +7,47 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # Initialize the WebDriver
-driver = webdriver.Chrome()  # You can use any other driver like Firefox, Edge, etc.
+driver = webdriver.Chrome()  # Ensure you have the appropriate WebDriver for your browser
 
 try:
     # Visit the website
-    driver.get("https://magento.softwaretestingboard.com/")
+    driver.get('https://magento.softwaretestingboard.com/')
 
-    # Wait until the 'Mens' menu is clickable and click it
+    # Wait until the "Mens" menu is clickable and click it
     mens_menu = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//span[text()='Men']"))
+        EC.element_to_be_clickable((By.LINK_TEXT, 'Men'))
     )
     mens_menu.click()
 
-    # Wait until the 'Tops' submenu is visible and click it
+    # Wait until the "Tops" submenu is visible and click it
     tops_menu = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//span[text()='Tops']"))
+        EC.element_to_be_clickable((By.LINK_TEXT, 'Tops'))
     )
     tops_menu.click()
 
-    # Wait until the 'Tees' submenu is visible and click it
+    # Wait until the "Tees" submenu is visible and click it
     tees_menu = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//span[text()='Tees']"))
+        EC.element_to_be_clickable((By.LINK_TEXT, 'Tees'))
     )
     tees_menu.click()
 
-    # Wait until the products are loaded and select the first product
+    # Wait until the product grid is visible and select the first product
     first_product = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "(//a[@class='product-item-link'])[1]"))
+        EC.visibility_of_element_located((By.CSS_SELECTOR, '.product-item .product-item-info'))
     )
     first_product.click()
 
-    # Wait until the 'Add to Cart' button is clickable and click it
+    # Wait until the "Add to Cart" button is clickable and click it
     add_to_cart_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "product-addtocart-button"))
+        EC.element_to_be_clickable((By.ID, 'product-addtocart-button'))
     )
     add_to_cart_button.click()
 
-    # Optionally, wait for the confirmation message or cart update
-    cart_confirmation = WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, "//div[@data-bind='html: $parent.prepareMessageForHtml(message.text)']"))
+    # Optionally, wait until the cart is updated (e.g., cart count is updated)
+    cart_count = WebDriverWait(driver, 10).until(
+        EC.text_to_be_present_in_element((By.CSS_SELECTOR, '.counter-number'), '1')
     )
+
     print("Product added to cart successfully!")
 
 finally:
@@ -63,13 +56,19 @@ finally:
 ```
 
 ### Explanation:
-1. **Initialize the WebDriver**: This script uses Chrome WebDriver. Make sure you have the appropriate WebDriver installed and available in your PATH.
-2. **Visit the Website**: The script navigates to the Magento website.
-3. **Dynamic Waits**: The script uses `WebDriverWait` along with `expected_conditions` to wait for elements to be clickable or visible before interacting with them.
-4. **Navigate through Menus**: It clicks through the Men > Tops > Tees menu items.
-5. **Select a Product**: It selects the first product listed.
-6. **Add to Cart**: It clicks the "Add to Cart" button.
-7. **Confirmation**: Optionally, it waits for a confirmation message to ensure the product was added to the cart.
-8. **Close the WebDriver**: Finally, it closes the browser.
+1. **Initialization**: The WebDriver is initialized for Chrome. Ensure you have the appropriate WebDriver installed and available in your PATH.
+2. **Visit the Website**: The script navigates to the specified URL.
+3. **Dynamic Waits**: At each step, the script waits for the element to be clickable or visible before interacting with it. This ensures that the script does not fail due to elements not being loaded.
+4. **Clicking Elements**: The script clicks on the "Men" menu, then "Tops", and finally "Tees".
+5. **Selecting a Product**: The script waits for the product grid to be visible and clicks on the first product.
+6. **Adding to Cart**: The script waits for the "Add to Cart" button to be clickable and clicks it.
+7. **Verification**: Optionally, the script waits until the cart count is updated to ensure the product was added successfully.
+8. **Cleanup**: The WebDriver is closed at the end of the script.
 
-Make sure to adjust the XPaths and other locators if the website structure changes.
+Make sure to have the necessary dependencies installed (`selenium` and the appropriate WebDriver for your browser). You can install Selenium using pip:
+
+```sh
+pip install selenium
+```
+
+Also, ensure that the WebDriver executable (e.g., `chromedriver` for Chrome) is in your system's PATH or specify the path to the executable when initializing the WebDriver.

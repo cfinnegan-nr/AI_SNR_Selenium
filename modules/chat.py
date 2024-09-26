@@ -17,13 +17,18 @@ def chatwithLLM(value):
         "api-key": OPENAI_API_KEY
     }
 
-    # Build the prompt from the value passed and other string instructions
-    initial_instruction = "Using Selenium 4.0 with Python write code for following scenario:"
-    #initial_instruction = "Using Selenium 4.0 with Java write code for following scenario:"
-    final_instruction = " using with dynamic wait at each step"
+    # # Build the prompt from the value passed and other string instructions
+    # initial_instruction = "Using Selenium 4.0 with Python write code for following scenario: "
+    # #initial_instruction = "Using Selenium 4.0 with Java write code for following scenario:"
+    # final_instruction = " using with dynamic wait at each step"
 
         
-    prompt = f"{initial_instruction}\n{value}\n{final_instruction}"
+    #prompt = f"{initial_instruction}\n{value}\n{final_instruction}"
+    prompt = value
+    print("\nFinal prompt...\n")
+    print(prompt)
+    print("\n\n")
+          
     prompt1 = "Tell me a joke."
     
     data = {

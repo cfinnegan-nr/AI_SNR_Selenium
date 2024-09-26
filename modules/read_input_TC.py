@@ -1,6 +1,6 @@
 import openpyxl
 
-def ReadTheInput():
+def ReadTheXLTCInput():
     wrkbk = openpyxl.load_workbook("TestSteps.xlsx")
     sh = wrkbk.active
 
