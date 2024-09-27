@@ -1,1 +1,7 @@
- using with dynamic wait at each step. Ensure any non-Python code in the output is marked with a '#' to denote comments.
+ using with dynamic wait at each step. 
+ Ensure any non-Python code in the output is marked with a '#' to denote comments.
+ Instead of using the Python Selenium command of "driver = webdriver.Chrome()" to initialize the WebDriver, 
+ insert the following custom code block: 
+  "  from config import get_chrome_driver
+   # Initialize the driver using the custom configuration
+     driver = get_chrome_driver()".
